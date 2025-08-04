@@ -10,7 +10,7 @@ Ce projet est principalement divisé en deux petits app django : **authentificat
 + Changement de mot de passe
 + Reinitialisation de mot de passe
   
-Utilisation de l'authentification de django en le personnalisant.
+Utilisation du système d'authentification que nous offre django.
 
 ### b. Examens
 + Téléversement d'un fichier pdf ou image
