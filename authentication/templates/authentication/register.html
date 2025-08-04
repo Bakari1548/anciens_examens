@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Inscription - Anciens examens{% endblock title %}
+
+{% comment %} {% block content %}
+    <h2>Créer un compte</h2>
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="bg-gray-500 text-white mx-auto py-3 px-4 rounded-lg shadow hover:bg-gray-600 transition-all duration-300 ease-in-out">
+            S'inscrire
+        </button>
+    </form>
+    <p>Vous avez déjà un compte ? <a href="{% url 'login' %}">Connectez-vous !</a></p>
+{% endblock content %} {% endcomment %}
+
+
+{% block content %}
+    <div class="py-8 md:px-12 px-6">
+        {% comment %} {% if form.errors %}
+        <p>Vos identifiants sont erronés, Veuillez réessayer.</p>
+        {% endif %} {% endcomment %}
+        <div class="bg-white flex md:flex-row flex-col-reverse gap-12 justify-center shadow-lg rounded-xl p-4 w-fit h-fit mx-auto">
+            <div class="flex flex-col gap-4 p-4 md:w-1/2 w-full">
+                <h2 class="text-2xl font-bold text-center pb-6 pt-2">Créer un compte</h2>
+                <form method="post" class="flex flex-col gap-4 w-full">
+                    {% csrf_token %}
+                    {% comment %} {{ form.as_p }} {% endcomment %}
+                    <div class="flex sm:flex-row flex-col gap-3 sm:pr-3">
+                        <div class="sm:w-1/2 flex flex-col gap-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                        </div>
+                        <div class="sm:w-1/2 flex flex-col gap-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 w-full">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                    </div>
+                    <div class="flex flex-col gap-3 w-full">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                    </div>
+                    <button type="submit" class="bg-gray-600 font-semibold text-white mx-auto py-3 px-4 rounded-lg shadow hover:bg-gray-700 transition-all duration-300 ease-in-out">
+                        S'inscrire
+                    </button>
+                </form>
+                <p class="text-center mt-4">Vous avez déjà un compte ? <a href="{% url 'login' %}" class="text-blue-500 font-semibold hover:underline">Connectez-vous !</a></p>
+            </div>
+            <div class="bg-white md:w-1/2">
+                <img
+                    class="h-full object-cover"
+                    src="{% static 'medias/student3.webp' %}"
+                >
+            </div>
+        </div>
+    </div>
+    {% comment %} {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+    {% endif %} {% endcomment %}
+{% endblock content %}

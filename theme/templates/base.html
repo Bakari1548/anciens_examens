@@ -1,0 +1,47 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+    {% tailwind_css %}
+</head>
+
+<body class="text-black font-serif leading-normal tracking-normal">
+{% comment %} 
+    <header class="bg-white flex flex-row items-center justify-between px-4 py-2 shadow-md">
+        <a href={% url 'home' %}>
+            <img src="{% static 'medias/logo_uidt.jpeg' %}" alt="Logo" class="h-8">
+        </a>
+        <h1 class="sm:text-xl text-lg font-bold text-gray-800">Anciens Examens</h1>
+        <nav class="p-4">
+            {% if user.is_authenticated %}
+                <button onClick={}>
+                    <i class="fa-regular fa-user text-gray-700 border-gray-200 h-fit text-xl"></i>
+                </button>
+            {% else %}
+                <a 
+                href="{% url 'login' %}" 
+                class="text-gray-700 font-medium bg-transparent border border-gray-300 shadow p-3 rounded-xl hover:bg-black/10 active:bg-black/10 duration-300 transition-all ease-in-out" 
+                >Se connecter</a>
+            {% endif %}
+        </nav>
+    </header> {% endcomment %}
+    {% include "examens/partials/Header.html" %}
+    <div class="main bg-gray-50">
+        {% block content %}{% endblock content %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://kit.fontawesome.com/ebee0eb947.js" crossorigin="anonymous"></script>
+</body>
+</html>

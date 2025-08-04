@@ -1,0 +1,67 @@
+{% load static %}
+{% load examens_extras %}
+
+<div class="flex flex-row bg-radial-[at_75%_25%] from-gray-50 via-gray-100 to-gray-400 to-90% w-full py-14 pb-48 justify-center items-center mx-auto p-4 md:px-4 px-6">
+    {% if user.is_authenticated %}
+    {% comment %} <p class="text-xl font-normal text-center my-6">Vous êtes connecté en tant que <span class="font-semibold">{{ user|get_first_letter_user }}</span></p> {% endcomment %}
+    {% comment %} {% else %}
+    <p class="text-xl font-bold text-center my-6">Veuillez vous connecter pour continuer</p>
+   {% endcomment %} {% endif %} 
+    <div class="relative md:block hidden h-68 w-1/4 ">
+        <h2 class="absolute top-0 left-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LMI</h2>
+        <h2 class="absolute -top-4 left-[85%] font-bold text-2xl text-gray-400 -rotate-50">MIO</h2>
+        <h2 class="absolute top-24 left-[25%] font-bold text-2xl text-gray-400/70 rotate-10">LGI</h2>
+        <h2 class="absolute top-36 left-[75%] font-bold text-2xl text-gray-400/70 rotate-15">LSEE</h2>
+        <h2 class="absolute top-68 left-[30%] font-bold text-2xl text-gray-500/70 -rotate-80">LPC</h2>
+        <img 
+            src={% static 'medias/sheet6.png' %}
+            class="absolute top-16 left-[65%] rotate-20 w-12 h-12 opacity-60"
+        >
+        <img 
+            src={% static 'medias/sheet4.png' %}
+            class="absolute top-44 left-[30%] -rotate-25 w-12 h-12 opacity-30"
+        >
+        <img 
+            src={% static 'medias/sheet3.png' %}
+            class="absolute top-60 left-[85%] rotate-35 w-12 h-12 opacity-60"
+        >
+    </div>
+    <div class="flex flex-col gap-8 md:px-0 sm:px-14 px-4 sm:pt-0 pt-20">
+        <h1 class="text-4xl font-medium text-center">
+            Bienvenue dans
+            <span class="bg-linear-to-r from-blue-500 via-blue-400 to-violet-700 bg-clip-text font-semibold text-transparent">anciens examens</span>
+        </h1>
+        {% comment %} <p class="text-gray-800 font-medium text-center text-lg">Une plateforme qui vous permet de consulter les anciens examens de l'UIDT.</p> {% endcomment %}
+        <p class="text-gray-800 font-medium text-center text-lg">Une plateforme qui collecte les anciens examens de l'UIDT pour vous aider à mieux reviser.</p>
+        {% comment %} <p class="mb-4">Utilisez le menu pour naviguer vers les différentes sections.</p>
+        <p class="mb-4">Pour commencer, vous pouvez consulter les examens disponibles dans la section "Examens".</p>
+        <p class="mb-4">Si vous avez des questions, n'hésitez pas à nous contacter.</p> {% endcomment %}
+        <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+            <a href="{% url 'home' %}" class="bg-gray-500 text-white py-3 px-4 rounded-lg shadow hover:bg-gray-600 transition-all duration-300 ease-in-out">
+                Consulter les Examens
+            </a>
+            <a href="{% url 'home' %}" class="border border-gray-700 text-gray-800 py-3 px-4 rounded-lg shadow hover:bg-gray-200 transition-all duration-300 ease-in-out">
+                Partager un examen
+            </a>
+        </div>
+    </div>
+      <div class="relative md:block hidden h-64 w-1/4 ">
+        <h2 class="absolute top-0 right-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LEA</h2>
+        <h2 class="absolute -top-4 right-[85%] font-bold text-2xl text-gray-400/70 -rotate-50">MTH</h2>
+        <h2 class="absolute top-28 right-[25%] font-bold text-2xl text-gray-400/70 -rotate-10">SEG</h2>
+        <h2 class="absolute top-36 right-[75%] font-bold text-2xl text-gray-400/70 -rotate-15">LEA</h2>
+        {% comment %} <h2 class="absolute top-68 right-[40%] font-bold text-2xl text-gray-500/70 rotate-40">LPC</h2> {% endcomment %}
+        <img 
+            src={% static 'medias/sheet1.png' %}
+            class="absolute top-16 right-[65%] rotate-20 w-12 h-12 opacity-60"
+        >
+        <img 
+            src={% static 'medias/sheet2.png' %}
+            class="absolute top-52 right-[35%] -rotate-35 w-12 h-12 opacity-30"
+        >
+        <img 
+            src={% static 'medias/sheet5.png' %}
+            class="absolute top-60 right-[85%] rotate-35 w-12 h-12 opacity-60"
+        >
+    </div>
+</div>

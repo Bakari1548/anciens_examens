@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% comment %} {% load static %} {% endcomment %}
+{% block title %}Accueil - Anciens Examens{% endblock %}
+
+{% block content %}
+    {% include "examens/partials/HeroSection.html" %}
+{% endblock content %}
+{% comment %}
+Le bloc {% block content %} est utilisé pour définir le contenu spécifique de cette page.
+{% endcomment %}
