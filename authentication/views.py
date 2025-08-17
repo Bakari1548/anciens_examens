@@ -4,12 +4,18 @@ from django.views.generic import View
 from . import forms
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import update_session_auth_hash
-# from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 
 class LoginPageView(View):
     template_name = 'authentication/login.html'
     form_class = forms.LoginForm
+
+    # def email_check(self):
+    #     return self.request.user.email.endswith("@example.com")
 
     def get(self, request):
         form = self.form_class()
@@ -40,10 +46,12 @@ class LoginPageView(View):
             context={ 'form': form, 'message': message,}
         )
     
-
 class SignUpView(View):
     template_name = 'authentication/register.html'
     form_class = forms.SignupForm
+
+    # def email_check(self):
+    #     return self.request.user.email.endswith("@example.com")
 
     def get(self, request):
         form = self.form_class()
@@ -92,3 +100,18 @@ def password_change(request):
         {'form': form}
     )
 
+
+# def reset_password(request):
+#     template_name = 'authentication/reset_password.html'
+#     return render(request, template_name)
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'authentication/password_reset.html'
+    email_template_name = 'authentication/password_reset_email.html'
+    # subject_template_name = 'authentication/password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('home')

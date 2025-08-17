@@ -1,7 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
-from django.contrib.auth.admin import UserAdmin
 from .models import Exam
+# Register your models here.
 
-admin.site.register(Exam)
+class ExamAdmin(admin.ModelAdmin):
+    list_display=('title', 'branch', 'year', 'author', 'date_upload')
+
+
+admin.site.register(Exam, ExamAdmin)

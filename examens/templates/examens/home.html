@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
-{% comment %} {% load static %} {% endcomment %}
+{% load static %}
 {% block title %}Accueil - Anciens Examens{% endblock %}
 
 {% block content %}
     {% include "examens/partials/HeroSection.html" %}
+    <div class="p-4 flex flex-col gap-3 items-center">
+        <h2 class="font-semibold text-2xl">Les examens de la licence informatique</h2>
+        {% for examen in examens %}
+            <div class="flex flex-col border p-2 w-2/3 items-center">
+                <h3 class="font-semibold">{{ examen.title }}</h3>
+                <p>Filière: {{ examen.branch }} - Année: {{ examen.year }}</p>
+                <a href="{% url 'read_exam' examen.id %}" class="bg-gray-300 p-2 rounded-lg hover:bg-gray-400">
+                    Lire l'examen
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock content %}
-{% comment %}
-Le bloc {% block content %} est utilisé pour définir le contenu spécifique de cette page.
-{% endcomment %}

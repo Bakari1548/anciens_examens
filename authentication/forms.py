@@ -12,7 +12,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=63, widget=forms.PasswordInput, label="Mot de passe")
 
 class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=63, label="Email")
+    email = forms.EmailField(max_length=63, label="Email universitaire")
     username = forms.CharField(max_length=63, label="Nom d'utilisateur")
     password1 = forms.CharField(max_length=63, widget=forms.PasswordInput, label="Mot de passe")
     password2 = forms.CharField(max_length=63, widget=forms.PasswordInput, label="Confirmer mot de passe")
@@ -27,4 +27,5 @@ class PasswordChangeForm(PasswordChangeForm):
 
     class Meta():
         # fields = ('old_password', 'new_password1', 'new_password2')
-        fields = 'old_password, password1, password2'
+        fields = 'oldpassword, password1, password2'
+

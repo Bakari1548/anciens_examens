@@ -1,12 +1,12 @@
 {% load static %}
 {% load examens_extras %}
 
-<div class="flex flex-row bg-radial-[at_75%_25%] from-gray-50 via-gray-100 to-gray-400 to-90% w-full py-14 pb-48 justify-center items-center mx-auto p-4 md:px-4 px-6">
-    {% if user.is_authenticated %}
-    {% comment %} <p class="text-xl font-normal text-center my-6">Vous êtes connecté en tant que <span class="font-semibold">{{ user|get_first_letter_user }}</span></p> {% endcomment %}
+<div class="flex flex-row bg-radial-[at_50%_50%] from-gray-50 via-gray-400/40 to-gray-100 to-90% w-full py-14 pb-48 justify-center items-center mx-auto p-4 md:px-4 px-6">
+    {% comment %} {% if user.is_authenticated %}
+    <p class="text-xl font-normal text-center my-6">Vous êtes connecté en tant que <span class="font-semibold">{{ user|get_first_letter_user }}</span></p> {% endcomment %}
     {% comment %} {% else %}
     <p class="text-xl font-bold text-center my-6">Veuillez vous connecter pour continuer</p>
-   {% endcomment %} {% endif %} 
+    {% endif %} {% endcomment %}
     <div class="relative md:block hidden h-68 w-1/4 ">
         <h2 class="absolute top-0 left-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LMI</h2>
         <h2 class="absolute -top-4 left-[85%] font-bold text-2xl text-gray-400 -rotate-50">MIO</h2>
@@ -29,7 +29,7 @@
     <div class="flex flex-col gap-8 md:px-0 sm:px-14 px-4 sm:pt-0 pt-20">
         <h1 class="text-4xl font-medium text-center">
             Bienvenue dans
-            <span class="bg-linear-to-r from-blue-500 via-blue-400 to-violet-700 bg-clip-text font-semibold text-transparent">anciens examens</span>
+            <span class="bg-linear-to-r from-violet-500 via-green-400 to-blue-600 bg-clip-text font-semibold text-transparent">anciens examens</span>
         </h1>
         {% comment %} <p class="text-gray-800 font-medium text-center text-lg">Une plateforme qui vous permet de consulter les anciens examens de l'UIDT.</p> {% endcomment %}
         <p class="text-gray-800 font-medium text-center text-lg">Une plateforme qui collecte les anciens examens de l'UIDT pour vous aider à mieux reviser.</p>
@@ -45,7 +45,7 @@
             </a>
         </div>
     </div>
-      <div class="relative md:block hidden h-64 w-1/4 ">
+    <div class="relative md:block hidden h-64 w-1/4 ">
         <h2 class="absolute top-0 right-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LEA</h2>
         <h2 class="absolute -top-4 right-[85%] font-bold text-2xl text-gray-400/70 -rotate-50">MTH</h2>
         <h2 class="absolute top-28 right-[25%] font-bold text-2xl text-gray-400/70 -rotate-10">SEG</h2>

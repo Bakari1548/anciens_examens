@@ -18,25 +18,6 @@
 </head>
 
 <body class="text-black font-serif leading-normal tracking-normal">
-{% comment %} 
-    <header class="bg-white flex flex-row items-center justify-between px-4 py-2 shadow-md">
-        <a href={% url 'home' %}>
-            <img src="{% static 'medias/logo_uidt.jpeg' %}" alt="Logo" class="h-8">
-        </a>
-        <h1 class="sm:text-xl text-lg font-bold text-gray-800">Anciens Examens</h1>
-        <nav class="p-4">
-            {% if user.is_authenticated %}
-                <button onClick={}>
-                    <i class="fa-regular fa-user text-gray-700 border-gray-200 h-fit text-xl"></i>
-                </button>
-            {% else %}
-                <a 
-                href="{% url 'login' %}" 
-                class="text-gray-700 font-medium bg-transparent border border-gray-300 shadow p-3 rounded-xl hover:bg-black/10 active:bg-black/10 duration-300 transition-all ease-in-out" 
-                >Se connecter</a>
-            {% endif %}
-        </nav>
-    </header> {% endcomment %}
     {% include "examens/partials/Header.html" %}
     <div class="main bg-gray-50">
         {% block content %}{% endblock content %}
