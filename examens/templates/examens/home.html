@@ -5,16 +5,36 @@
 
 {% block content %}
     {% include "examens/partials/HeroSection.html" %}
-    <div class="p-4 flex flex-col gap-3 items-center">
-        <h2 class="font-semibold text-2xl">Les examens de la licence informatique</h2>
-        {% for examen in examens %}
-            <div class="flex flex-col border p-2 w-2/3 items-center">
-                <h3 class="font-semibold">{{ examen.title }}</h3>
-                <p>Filière: {{ examen.branch }} - Année: {{ examen.year }}</p>
-                <a href="{% url 'read_exam' examen.id %}" class="bg-gray-300 p-2 rounded-lg hover:bg-gray-400">
-                    Lire l'examen
-                </a>
-            </div>
-        {% endfor %}
+    {% include "examens/partials/Filieres.html" %}
+    {% include "examens/partials/CTA.html" %}
+    <div class="p-4 sm:px-12 px-6 flex flex-col gap-3 items-center">
+        <h2 class="font-semibold text-2xl mb-8">Récents examens des années dernières</h2>
+        <div class="grid lg:grid-cols-2 grid-cols-1 sm:gap-4 gap-8">
+            {% for examen in examens %}
+                <div class="bg-white w-full shadow-lg flex sm:flex-row flex-col sm:justify-start justify-center items-start border border-gray-200 rounded-lg py-3 px-4 gap-4">
+                    <img class="sm:w-48 w-64 mb-3 sm:mx-0 mx-auto" src="{% static 'medias/temp/Examen_Electronique_2022/page_1.jpg' %}" >
+                    <div class="flex flex-col gap-3 mt-3 w-full">
+                        <h3 class="font-semibold text-lg">{{ examen.title }}</h3>
+                        <div class="flex flex-col gap-3 mt-4">
+                            <p class="text-sm"><span class="font-semibold">UFR :</span> {{ examen.ufr }}</p>
+                            <p class="text-sm"><span class="font-semibold">Filière :</span> {{ examen.branch }}</p>
+                            <p class="text-sm"><span class="font-semibold">Année :</span> {{ examen.year }}</p>
+                            <p class="text-sm"><span class="font-semibold">Publié par :</span> {{ examen.author }}</p>
+                        </div>
+                        <div class="flex min-[550px]:flex-row flex-col gap-6 w-full">
+                            <a href="{% url 'read_exam' examen.id %}" class="bg-gray-500 text-white text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-200 ease-in-out">
+                                Lire
+                            </a>
+                            <a href="{% url 'read_exam' examen.id %}" class="bg-gray-500 text-white text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-200 ease-in-out">
+                                Télécharger
+                            </a>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

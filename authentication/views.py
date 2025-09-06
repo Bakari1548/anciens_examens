@@ -39,7 +39,7 @@ class LoginPageView(View):
                 login(request, user)
                 print("User connected. ", user)
                 return redirect(settings.LOGIN_REDIRECT_URL)
-        message = 'Les identifiants entrés sont incorrects.'
+        message = 'Identifiants incorrects. Veuillez vérifier votre nom d\'utilisateur et mot de passe.'
         return render(
             request,
             self.template_name,
@@ -68,7 +68,7 @@ class SignUpView(View):
             user = form.save()
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
-        message = 'Veuillez verifier les informations saisies.'
+        message = 'Veuillez verifier si les deux mot de passe sont similaires ou revoyez les informations saisies.'
         return render(
             request,
             self.template_name,

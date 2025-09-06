@@ -51,7 +51,8 @@ urlpatterns = [
 
 
     # App examens
-    path('examens/<int:examen_id>/', examens.views.read_exam, name='read_exam')
+    path('examens/<int:examen_id>/', examens.views.read_exam, name='read_exam'),
+    path('examens/ajouter-examen', examens.views.post_exam, name='post_exam')
 ]
 
 if settings.DEBUG:

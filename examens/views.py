@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from examens.models import Exam
+from examens.forms import ExamForm
+from django.contrib.auth.decorators import login_required
 from pdf2image import convert_from_path
 import os
 from django.conf import settings
+from unidecode import unidecode
+
 
 def home(request):
     examens = Exam.objects.all()
@@ -13,23 +17,38 @@ def read_exam(request, examen_id):
     examen = Exam.objects.get(id=examen_id)
     
     path_file = examen.file.path
-    slug_title = examen.title.replace(" ", "_")
-    # par exemple title = Examen Droit ; slug_title = Examen_Droit
+    slug_title = unidecode(examen.title.replace(" ", "_"))
+    print(slug_title)
+    
+    # par exemple title = Examen Mathématiques ; slug_title = Examen_Mathematiques
 
     file = examen.file
     images_to_display = []
     if file and file.name.endswith('.pdf'):
-        # Convertir le fichier pdf en image avec image2pdf
-        images = convert_from_path(path_file)
-        # Sauvegarder temporairement les images
-        for i, image in enumerate(images):
-            # temp_path = os.path.join(settings.MEDIA_ROOT, 'temp', f'{slug_title}_{examen.year}_page_{i+1}.jpg')
-            # image.save(temp_path, 'JPEG')
-            images_to_display.append(f'/medias/examens/temp/{slug_title}_{examen.year}_page_{i+1}.jpg')
+        temp_dir_name = f'temp/{slug_title}_{examen.year or ""}'
+        temp_dir_path = os.path.join(settings.MEDIA_ROOT, temp_dir_name)
+        os.makedirs(temp_dir_path, exist_ok=True)
+
+        # Convertir seulement la premiere du fichier PDF avec image2pdf
+        images = convert_from_path(path_file, first_page=1, last_page=1)
+
+        # Sauvegarder l'image de la premiere page
+        if images: # Pour verifier si la liste n'est pas vide
+            image = images[0]
+            image_name = f'{slug_title}.jpg'
+            image_path = os.path.join(temp_dir_path, image_name)
+
+            # Sauvegarde l'image sur le disque
+            # image.save(image_path, 'JPEG')
+
+            # Ajoute l'URL de l'image à la liste pour le template
+            images_to_display.append(os.path.join(settings.MEDIA_URL, temp_dir_name, image_name).replace('\\', '/'))
+
     else:
         # C'est une image déjà stockée dans 'examens/'
         images_to_display.append(examen.file.url)    
 
+    print(images_to_display)
   
     context = {
         'examen': examen,
@@ -39,3 +58,29 @@ def read_exam(request, examen_id):
 
 
     return render(request, 'examens/read_examen.html', context=context)
+
+
+@login_required  # pour partager un examen il faut se connecter 
+def post_exam(request):
+    if request.method == 'POST':
+        print("FILES:", request.FILES)  # Vérifiez si le fichier est présent
+        # print("POST:", request.POST)
+        form = ExamForm(request.POST, request.FILES)
+        if form.is_valid():
+            # sauvegarder les donnees entrees sans l'envoyer
+            examen = form.save(commit=False)
+            # lier l'auteur et l'examen à partager
+            examen.author = request.user
+            # print(examen.file)
+            # sauvegarder definitivement les donnees de examen
+            examen.save()
+            # apres sauvegarde rediriger vers une page qui detaille l'examen partage
+            return redirect('read_exam', examen.id)
+    else:
+        form = ExamForm()
+
+
+    return render(request,
+        'examens/post_exam.html',
+        context={ 'form': form }
+    )

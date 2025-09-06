@@ -3,42 +3,35 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, FileExtensionValidator
 
 class Exam(models.Model):
+    class UFR(models.TextChoices):
+        SET = 'SET'
+        SES = 'SES'
+        SANTE = 'SANTE'
 
-    SES = 'SES'
-    SET = 'SET'
-    SANTE = 'SANTE' 
-    
-
-    UFR_CHOICES = (
-        (SET, 'Set'),
-        (SES, 'Ses'),
-        (SANTE, 'Santé'),
-    )
-
-    BRANCH_CHOICES = (
+    class FILIERE(models.TextChoices):
         # SET
-        ('LI', 'Licence Informatique'),
-        ('LMI', 'Licence Mathematiques Informatique'),
-        ('LPC', 'Licence Physique Chimie'),
-        ('LSEE', 'Licence en Sciences de l\'Eau et de l\'Environnement'),
+        LI = 'Licence Informatique'
+        LMI = 'Licence Mathematiques Informatique'
+        LPC = 'Licence Physique Chimie'
+        LSEE = 'Licence en Sciences de l\'Eau et de l\'Environnement'
         # SES
-        ('MIO', 'Management et Informatisé des Organisations'),
-        ('MTH', 'Management du tourisme et de l\'hôtellerie'),
-        ('LEA', 'Langues Étrangères Appliquées'),
-        ('LAC', 'Lettres, Arts et Civilsations'),
-        ('SEG', 'Sciences Économiques et Gestion'),
+        MIO = 'Management et Informatisé des Organisations'
+        MTH = 'Management du tourisme et de l\'hôtellerie'
+        LEA = 'Langues Étrangères Appliquées'
+        LAC = 'Lettres, Arts et Civilsations'
+        SEG = 'Sciences Économiques et Gestion'
         # SANTE
-        ('MDS', 'Médecine et Santé'),
-        ('DENT', 'Dentisterie'),
-        ('PHARM', 'Pharmacie'),
-    )
+        MDS = 'Médecine et Santé'
+        DENT = 'Dentisterie'
+        PHARM = 'Pharmacie'
 
 
-    extensions = ['pdf', 'png', 'jpg', 'jpeg', 'webp'] # Les extensions acceptés pour le file
+
+    extensions = ['pdf', 'png', 'jpg', 'jpeg', 'webp'] # Les extensions acceptés pour file
 
     title = models.CharField(max_length=200) # Titre de l'examen
-    ufr = models.CharField(max_length=50, choices=UFR_CHOICES) # UFR de l'examen
-    branch = models.CharField(max_length=500, choices=BRANCH_CHOICES) # Filière
+    ufr = models.CharField(max_length=50, choices=UFR.choices) # UFR de l'examen
+    branch = models.CharField(max_length=500, choices=FILIERE.choices) # Filière
     year = models.IntegerField(validators=[MinValueValidator(2010)], null=True, blank=True) # Année de l'examen
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,

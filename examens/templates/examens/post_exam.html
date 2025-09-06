@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Partager un examen - Anciens examens{% endblock title %}
+{% block content %}
+    <div class="flex w-w-full py-10 px-12">
+        <div class="w-1/2">
+            <h2 class="text-3xl font-bold pb-6">Partager un examen</h2>
+            <form method='post'  enctype="multipart/form-data" class="flex flex-col gap-6">
+                {% csrf_token %}
+                <div class="flex flex-col gap-3">
+                    {{ form.title.label_tag }}
+                    {{ form.title|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                </div>
+                <div class="flex flex-col gap-3">
+                    {{ form.year.label_tag }}
+                    {{ form.year|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                </div>
+                <div class="flex flex-row gap-5">
+                    <div class="flex flex-col gap-3 sm:w-1/2">
+                        {{ form.ufr.label_tag }}
+                        {{ form.ufr|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                    </div>
+                    <div class="flex flex-col gap-3 sm:w-1/2">
+                        {{ form.branch.label_tag }}
+                        {{ form.branch|add_class:"rounded-lg border-gray-300 font-semibold" }}
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    {{ form.file.label_tag }}
+                    {{ form.file|add_class:"rounded-lg border border-gray-300 font-semibold bg-white" }}
+                </div>
+                {% comment %} {{ form.as_p }} {% endcomment %}
+                 <button type="submit" class="bg-gray-600 font-semibold text-white w-fit py-3 px-12 rounded-lg shadow hover:bg-gray-700 active:bg-gray-700 transition-all duration-300 ease-in-out">
+                    Ajouter
+                </button>
+            </form>
+        </div>
+        {% comment %} <img
+            class="md:h-[600px] rounded-lg h-full object-cover"
+            src="{% static 'medias/student6.webp' %}"
+            alt="Partager un examen"
+        > {% endcomment %}
+    </div>
+{% endblock content %}

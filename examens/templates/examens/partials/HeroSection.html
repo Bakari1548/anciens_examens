@@ -9,13 +9,13 @@
     {% endif %} {% endcomment %}
     <div class="relative md:block hidden h-68 w-1/4 ">
         <h2 class="absolute top-0 left-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LMI</h2>
-        <h2 class="absolute -top-4 left-[85%] font-bold text-2xl text-gray-400 -rotate-50">MIO</h2>
+        {% comment %} <h2 class="absolute -top-4 left-[85%] font-bold text-2xl text-gray-400 -rotate-50">MIO</h2> {% endcomment %}
         <h2 class="absolute top-24 left-[25%] font-bold text-2xl text-gray-400/70 rotate-10">LGI</h2>
         <h2 class="absolute top-36 left-[75%] font-bold text-2xl text-gray-400/70 rotate-15">LSEE</h2>
         <h2 class="absolute top-68 left-[30%] font-bold text-2xl text-gray-500/70 -rotate-80">LPC</h2>
         <img 
             src={% static 'medias/sheet6.png' %}
-            class="absolute top-16 left-[65%] rotate-20 w-12 h-12 opacity-60"
+            class="absolute top-16 left-[65%] rotate-20 w-12 h-12 opacity-40"
         >
         <img 
             src={% static 'medias/sheet4.png' %}
@@ -23,7 +23,7 @@
         >
         <img 
             src={% static 'medias/sheet3.png' %}
-            class="absolute top-60 left-[85%] rotate-35 w-12 h-12 opacity-60"
+            class="absolute top-60 left-[85%] rotate-35 w-12 h-12 opacity-40"
         >
     </div>
     <div class="flex flex-col gap-8 md:px-0 sm:px-14 px-4 sm:pt-0 pt-20">
@@ -36,11 +36,11 @@
         {% comment %} <p class="mb-4">Utilisez le menu pour naviguer vers les différentes sections.</p>
         <p class="mb-4">Pour commencer, vous pouvez consulter les examens disponibles dans la section "Examens".</p>
         <p class="mb-4">Si vous avez des questions, n'hésitez pas à nous contacter.</p> {% endcomment %}
-        <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <a href="{% url 'home' %}" class="bg-gray-500 text-white py-3 px-4 rounded-lg shadow hover:bg-gray-600 transition-all duration-300 ease-in-out">
+        <div class="flex flex-col min-[520px]:flex-row gap-4 justify-center items-center">
+            <a href="{% url 'home' %}" class="bg-gray-500 text-white py-3 px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out">
                 Consulter les Examens
             </a>
-            <a href="{% url 'home' %}" class="border border-gray-700 text-gray-800 py-3 px-4 rounded-lg shadow hover:bg-gray-200 transition-all duration-300 ease-in-out">
+            <a href="{% url 'post_exam' %}" class="border border-gray-700 text-gray-800 py-3 px-4 rounded-lg shadow hover:bg-gray-200 active:bg-gray-200 transition-all duration-300 ease-in-out">
                 Partager un examen
             </a>
         </div>
@@ -49,11 +49,11 @@
         <h2 class="absolute top-0 right-[35%] font-bold text-2xl text-gray-400/60 -rotate-25">LEA</h2>
         <h2 class="absolute -top-4 right-[85%] font-bold text-2xl text-gray-400/70 -rotate-50">MTH</h2>
         <h2 class="absolute top-28 right-[25%] font-bold text-2xl text-gray-400/70 -rotate-10">SEG</h2>
-        <h2 class="absolute top-36 right-[75%] font-bold text-2xl text-gray-400/70 -rotate-15">LEA</h2>
-        {% comment %} <h2 class="absolute top-68 right-[40%] font-bold text-2xl text-gray-500/70 rotate-40">LPC</h2> {% endcomment %}
+        <h2 class="absolute top-36 right-[75%] font-bold text-2xl text-gray-400/70 -rotate-15">LAC</h2>
+        <h2 class="absolute top-68 right-[40%] font-bold text-2xl text-gray-500/70 rotate-40">MIO</h2>
         <img 
             src={% static 'medias/sheet1.png' %}
-            class="absolute top-16 right-[65%] rotate-20 w-12 h-12 opacity-60"
+            class="absolute top-16 right-[65%] rotate-20 w-12 h-12 opacity-40"
         >
         <img 
             src={% static 'medias/sheet2.png' %}
@@ -61,7 +61,7 @@
         >
         <img 
             src={% static 'medias/sheet5.png' %}
-            class="absolute top-60 right-[85%] rotate-35 w-12 h-12 opacity-60"
+            class="absolute top-60 right-[85%] rotate-35 w-12 h-12 opacity-40"
         >
     </div>
 </div>

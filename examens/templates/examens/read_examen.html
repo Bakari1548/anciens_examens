@@ -5,15 +5,28 @@
 {% block title %}{{ examen.title }} - Anciens examens{% endblock title %}
 
 {% block content %}
-<div class="bg-green-400 h-60">
-    <h3 class="">{{ examen.title }}</h3>
-    <h3 class="">{{ examen.branch }}</h3>
-    <h3 class="">{{ examen.ufr }}</h3>
-    <h3 class="">{{ examen.year }}</h3>
+<div class="px-12 py-4">
+    <h3 class="">Titre : {{ examen.title }}</h3>
+    <h3 class="">Filiere : {{ examen.branch }}</h3>
+    <h3 class="">UFR : {{ examen.ufr }}</h3>
+    <h3 class="">Année : {{ examen.year }}</h3>
     <h3 class="">{{ examen.author }}</h3>
-
-    {% for image in images %}
-        <img class="w-48 mb-3" src="{% static image %}" >
-    {% endfor %}
+    {% comment %} <div class="flex flex-row gap-4 my-4">
+        {% for image in images %}
+        <img class="w-48 mb-3 cursor-pointer" src="{% static image %}" >
+        {% endfor %}
+    </div> {% endcomment %}
+    <iframe 
+        class="bg-red-300 mt-4 mb-8 mx-auto flex justify-center" 
+        src="{% static examen.file.url %}" 
+        {% comment %} src="{% static '/medias/examens/EXAMEN_ELECTRONIQUE_INFO_2022.pdf' %}" {% endcomment %}
+        width="100%" 
+        height="800"
+    ></iframe>
+    <a 
+        href="file://{{ examen.file.path }}" 
+        target="_blank" 
+        class="p-2 rounded-lg text-white font-semibold duration-300 my-12 bg-gray-500 active:bg-gray-600"
+    >Telecharger le fichier</a>
 </div>
 {% endblock %}
