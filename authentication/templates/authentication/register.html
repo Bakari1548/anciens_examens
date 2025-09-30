@@ -9,9 +9,6 @@
     <div class="pt-6 pb-10 md:px-12 px-6">
         <div class="bg-white flex md:flex-row flex-col-reverse md:gap-12 gap-6 justify-center shadow-lg rounded-xl p-4 w-fit h-fit mx-auto">
             <div class="flex flex-col gap-4 p-4 md:w-1/2 w-full">
-                <p class="text-center text-red-500 -mb-5">
-                    {{ message }}
-                </p>
                 <h2 class="text-2xl font-bold text-center pb-6 pt-2">Créer un compte</h2>
                 <form method="post" class="flex flex-col gap-4 w-full">
                     {% csrf_token %}
@@ -34,6 +31,9 @@
                         {{ form.password2.label_tag }}
                         {{ form.password2|add_class:"rounded-lg border-gray-300 font-semibold" }}
                     </div>
+                    <p class="text-red-500 -mb-5">
+                        {{ message }}
+                    </p>
                     <button type="submit" class="bg-gray-600 font-semibold text-white mx-auto py-3 px-4 rounded-lg shadow hover:bg-gray-700 active:bg-gray-700 transition-all duration-300 ease-in-out">
                         S'inscrire
                     </button>

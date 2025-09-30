@@ -1,40 +1,60 @@
 {% extends "base.html" %}
-
 {% load static %}
+{% load i18n %}
+
 {% block title %}Accueil - Anciens Examens{% endblock %}
 
 {% block content %}
     {% include "examens/partials/HeroSection.html" %}
-    {% include "examens/partials/Filieres.html" %}
-    {% include "examens/partials/CTA.html" %}
-    <div class="p-4 sm:px-12 px-6 flex flex-col gap-3 items-center">
-        <h2 class="font-semibold text-2xl mb-8">Récents examens des années dernières</h2>
-        <div class="grid lg:grid-cols-2 grid-cols-1 sm:gap-4 gap-8">
-            {% for examen in examens %}
-                <div class="bg-white w-full shadow-lg flex sm:flex-row flex-col sm:justify-start justify-center items-start border border-gray-200 rounded-lg py-3 px-4 gap-4">
-                    <img class="sm:w-48 w-64 mb-3 sm:mx-0 mx-auto" src="{% static 'medias/temp/Examen_Electronique_2022/page_1.jpg' %}" >
-                    <div class="flex flex-col gap-3 mt-3 w-full">
-                        <h3 class="font-semibold text-lg">{{ examen.title }}</h3>
-                        <div class="flex flex-col gap-3 mt-4">
-                            <p class="text-sm"><span class="font-semibold">UFR :</span> {{ examen.ufr }}</p>
-                            <p class="text-sm"><span class="font-semibold">Filière :</span> {{ examen.branch }}</p>
-                            <p class="text-sm"><span class="font-semibold">Année :</span> {{ examen.year }}</p>
-                            <p class="text-sm"><span class="font-semibold">Publié par :</span> {{ examen.author }}</p>
-                        </div>
-                        <div class="flex min-[550px]:flex-row flex-col gap-6 w-full">
-                            <a href="{% url 'read_exam' examen.id %}" class="bg-gray-500 text-white text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-200 ease-in-out">
-                                Lire
-                            </a>
-                            <a href="{% url 'read_exam' examen.id %}" class="bg-gray-500 text-white text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-200 ease-in-out">
-                                Télécharger
-                            </a>
-                        </div>
-                        <div>
-
+    {% include "examens/partials/FilterSearch.html" %}
+    <div class="p-4 sm:px-12 px-6 flex flex-col gap-3">
+        {% if form.errors %}
+            <p class="text-center text-xl font-medium text-gray-600">
+                Désolé, nous n'avons que des examens de 2010 jusqu'à aujourd'hui
+            </p>
+        {% else %}
+            <h2 class="pb-4 font-medium text-xl text-gray-600">
+                {{ examens|length }} examens disponibles
+            </h2>
+            <div class="grid lg:grid-cols-2 grid-cols-1 sm:gap-4 gap-8">
+                {% for examen in examens %}
+                    <div class="bg-white w-full shadow flex sm:flex-row flex-col sm:justify-start justify-center items-center border border-gray-200 rounded-lg py-3 px-4 gap-4">
+                        <img class="sm:w-48 opacity-70 w-60 sm:mx-0 mx-auto" src="{% static 'medias/file_exam.png' %}" >
+                        <div class="flex flex-col gap-3 mt-3 w-full">
+                            <h3 class="font-semibold text-lg text-gray-800">{{ examen.title }}</h3>
+                            <div class="flex flex-col gap-3 mt-4">
+                                <p class="text-sm"><span class="font-semibold">UFR :</span> {{ examen.ufr }}</p>
+                                <p class="text-sm"><span class="font-semibold">Filière :</span> {{ examen.filiere }}</p>
+                                <p class="text-sm"><span class="font-semibold">Matiere :</span> {{ examen.matiere }}</p>
+                                {% if examen.year %}
+                                    <p class="text-sm"><span class="font-semibold">Année :</span> {{ examen.year }}</p>
+                                {% else %}
+                                    <p class="text-sm"><span class="font-semibold">Année :</span> non précisée</p>
+                                {% endif %}
+                                <p class="text-sm"><span class="font-semibold">Publié par :</span> {{ examen.author }}</p>
+                            </div>
+                            <div class="flex min-[550px]:flex-row flex-col gap-6 w-full">
+                                <a 
+                                    href="{% url 'read_exam' examen.id %}" 
+                                    class="bg-blue-400/40 text-black text-sm flex items-center justify-center gap-1 p-2 min-[550px]:w-1/2 font-semibold rounded-lg shadow hover:bg-blue-400 active:bg-blue-400 transition-all duration-200 ease-in-out"
+                                >
+                                    <i class="fa-regular fa-eye text-blue-600"></i>
+                                    <span>Lire</span>
+                                </a>
+                                <a href="{% url 'read_exam' examen.id %}" class="bg-transparent border border-gray-300 text-black text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-100 active:bg-gray-200 transition-all duration-200 ease-in-out">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Télécharger</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <a href="{% url 'home'%}" class="bg-gray-500 text-white text-center py-3 px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 mt-10 w-fit transition-all duration-300 ease-in-out">
+            <span>Voir tous les examens</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
     </div>
+    {% include "examens/partials/CTA.html" %}
 {% endblock content %}

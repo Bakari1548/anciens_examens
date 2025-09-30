@@ -20,19 +20,25 @@
                     <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-fit dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             <li>
-                                <a href="#" class="block px-4 py-2 font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href="#" class="px-4 py-2 flex flex-row items-center gap-2 font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <i class="fa-solid fa-user"></i>
                                     <span>{{ user | upper }}</span>
                                 </a>
                             </li>
                             <li>
-                                <a href={% url 'password-change' %} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href={% url 'password-change' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <i class="fa-solid fa-key"></i>
                                     <span>Changer de mot de passe</span>
                                 </a>
                             </li>
                             <li>
-                                <a href={% url 'logout' %} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href={% url 'regle_a_respecter' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    <span>Règles à respecter</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={% url 'logout' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     <span>Déconnecter</span>
                                 </a>
@@ -50,15 +56,21 @@
                     <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-fit dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             <li>
-                                <a href={% url 'login' %} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href={% url 'login' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <i class="fa-solid fa-right-to-bracket"></i>
                                     <span>Se connecter</span>
                                 </a>
                             </li>
                             <li>
-                                <a href={% url 'register' %} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href={% url 'register' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Créer un compte</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={% url 'regle_a_respecter' %} class="px-4 py-2 flex flex-row items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    <span>Règles à respecter</span>
                                 </a>
                             </li>
                         </ul>

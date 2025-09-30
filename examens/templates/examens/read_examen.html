@@ -5,28 +5,43 @@
 {% block title %}{{ examen.title }} - Anciens examens{% endblock title %}
 
 {% block content %}
-<div class="px-12 py-4">
-    <h3 class="">Titre : {{ examen.title }}</h3>
-    <h3 class="">Filiere : {{ examen.branch }}</h3>
-    <h3 class="">UFR : {{ examen.ufr }}</h3>
-    <h3 class="">Année : {{ examen.year }}</h3>
-    <h3 class="">{{ examen.author }}</h3>
-    {% comment %} <div class="flex flex-row gap-4 my-4">
+<div class="sm:px-12 px-4 py-4 pb-20">
+    <div class="flex flex-col gap-4 mt-6">
+        <h2 class="text-center text-2xl bg-gray-200 w-full p-3 rounded-sm mx-auto font-semibold text-gray-700">
+            {{ examen.title }}
+        </h2>
+        <div class="flex flex-col gap-4">
+            <h3 class="text-lg font-medium text-left text-gray-600"><strong>Filiere :</strong> {{ examen.filiere }}</h3>
+            <h3 class="text-lg font-medium text-left text-gray-600"><strong>Matière :</strong> {{ examen.matiere }}</h3>
+        </div>
+        <div class="flex flex-col gap-4">
+            <h3 class="text-lg font-medium text-left text-gray-600"><strong>UFR :</strong> {{ examen.ufr }}</h3>
+             {% if examen.year %}
+                <h3 class="text-lg font-medium text-left text-gray-600"><strong>Année :</strong> {{ examen.year }}</h3>
+                {% else %}
+                <h3 class="text-lg font-medium text-left text-gray-600"><strong>Année :</strong> non précisée</h3>
+            {% endif %}
+        </div>
+        <h3 class="">Publié(e) par {{ examen.author }}</h3>
+    </div>
+    <div class="flex flex-row gap-4 my-4">
         {% for image in images %}
         <img class="w-48 mb-3 cursor-pointer" src="{% static image %}" >
         {% endfor %}
-    </div> {% endcomment %}
+    </div>
     <iframe 
-        class="bg-red-300 mt-4 mb-8 mx-auto flex justify-center" 
+        class="mt-8 mb-20 mx-auto flex justify-center" 
         src="{% static examen.file.url %}" 
-        {% comment %} src="{% static '/medias/examens/EXAMEN_ELECTRONIQUE_INFO_2022.pdf' %}" {% endcomment %}
         width="100%" 
         height="800"
     ></iframe>
     <a 
-        href="file://{{ examen.file.path }}" 
+        href="{% static examen.file.url %}" 
         target="_blank" 
-        class="p-2 rounded-lg text-white font-semibold duration-300 my-12 bg-gray-500 active:bg-gray-600"
-    >Telecharger le fichier</a>
+        class="bg-gray-500 font-semibold text-white py-3 px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out"
+    >
+        <i class="fa-solid fa-download"></i>
+        <span>Telecharger le fichier</span>
+    </a>
 </div>
 {% endblock %}

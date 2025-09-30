@@ -1,19 +1,79 @@
 from django.shortcuts import render, redirect
 from examens.models import Exam
-from examens.forms import ExamForm
+from django.db.models import Q
+from examens.forms import ExamForm, SearchExamForm
 from django.contrib.auth.decorators import login_required
-from pdf2image import convert_from_path
 import os
 from django.conf import settings
+from pdf2image import convert_from_path
 from unidecode import unidecode
 
 
 def home(request):
     examens = Exam.objects.all()
-    return render(request, 'examens/home.html', { 'examens': examens })
+
+    # Crée une instance du formulaire, pré-remplie avec les données GET
+    form = SearchExamForm(request.GET)
+
+    if form.is_valid():
+        year_filter = form.cleaned_data.get('year')
+        matiere_filter = form.cleaned_data.get('matiere')
+        filiere_filter = form.cleaned_data.get('filiere')
+        title_exam_filter = form.cleaned_data.get('title_exam')
+        
+        # Gestion du filtrage des examens
+        if year_filter or matiere_filter or filiere_filter:
+            if matiere_filter:
+                examens = Exam.objects.filter(matiere=matiere_filter)
+            
+            if filiere_filter:
+                examens = Exam.objects.filter(filiere=filiere_filter)
+            
+            if year_filter:
+                examens = Exam.objects.filter(year=year_filter)
+
+            if year_filter and matiere_filter:
+                examens = Exam.objects.filter(
+                    Q(year=year_filter) &
+                    Q(matiere=matiere_filter)
+                )
+            
+            if matiere_filter and filiere_filter:
+                examens = Exam.objects.filter(
+                    Q(matiere=matiere_filter) &
+                    Q(filiere=filiere_filter)
+                )
+            
+            if year_filter and filiere_filter:
+                examens = Exam.objects.filter(
+                    Q(year=year_filter) &
+                    Q(filiere=filiere_filter)
+                ) 
+                
+            if year_filter and filiere_filter and matiere_filter:
+                examens = Exam.objects.filter(
+                    Q(year=year_filter) &
+                    Q(filiere=filiere_filter) &
+                    Q(matiere=matiere_filter)
+                ) 
+        
+        # rechercher en tapant le titre de l'examen
+        if title_exam_filter:
+            examens = Exam.objects.filter(title=title_exam_filter)
+
+
+    context = {
+        'form': form,
+        'examens': examens,
+    }
+
+
+    return render(request, 'examens/home.html', context)
 
 
 def read_exam(request, examen_id):
+    examen = Exam.objects.get(id=examen_id)
+
     examen = Exam.objects.get(id=examen_id)
     
     path_file = examen.file.path
@@ -55,9 +115,10 @@ def read_exam(request, examen_id):
         'images': images_to_display,
         # 'path_file': images_to_display,
     }
-
-
+    
+    context = { 'examen': examen }
     return render(request, 'examens/read_examen.html', context=context)
+
 
 
 @login_required  # pour partager un examen il faut se connecter 
@@ -84,3 +145,6 @@ def post_exam(request):
         'examens/post_exam.html',
         context={ 'form': form }
     )
+
+def regle(request):
+    return render(request, 'examens/regles.html')

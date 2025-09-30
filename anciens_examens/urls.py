@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', examens.views.home, name='home'),  # path vers la page d'accueil
 
-    # Urls authentication
+    # App authentication
     path(
         'connexion/', 
         authentication.views.LoginPageView.as_view(template_name='authentication/login.html'), 
@@ -52,7 +52,9 @@ urlpatterns = [
 
     # App examens
     path('examens/<int:examen_id>/', examens.views.read_exam, name='read_exam'),
-    path('examens/ajouter-examen', examens.views.post_exam, name='post_exam')
+    # path('examens/search/<int:examen_year', examens.views.search_exam, name='search_exam'),
+    path('examens/ajouter-examen', examens.views.post_exam, name='post_exam'),
+    path('examens/regle-a-respecter', examens.views.regle, name='regle_a_respecter')
 ]
 
 if settings.DEBUG:
