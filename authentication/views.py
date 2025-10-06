@@ -1,21 +1,17 @@
 from django.shortcuts import render, redirect
-from django.conf import settings
-from django.views.generic import View
-from . import forms
+from . import forms, models
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import update_session_auth_hash
-from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
+from django.views.generic import View
+from .services import send_verification_code
 
 
 class LoginPageView(View):
     template_name = 'authentication/login.html'
     form_class = forms.LoginForm
-
-    # def email_check(self):
-    #     return self.request.user.email.endswith("@example.com")
 
     def get(self, request):
         form = self.form_class()
@@ -28,14 +24,17 @@ class LoginPageView(View):
     
     def post(self, request):
         form = self.form_class(request.POST)
+
         if form.is_valid():
-            user = authenticate(
-                request,
-                # email = form.cleaned_data['email'],
-                username=form.cleaned_data['username'],
-                password = form.cleaned_data['password'],
-            )
-            if user is not None:
+            username = form.cleaned_data['username'],
+            password = form.cleaned_data['password'],
+            # email=form.cleaned_data['email'],
+            data_user = models.User.objects.get(username=username)
+
+            user = authenticate(request, username, password)
+            # Vérifier si les donnees de l'utilisateur sont remplies
+            # Et si le compte est activé (email universitaire verifié)
+            if user is not None and data_user.is_active:
                 login(request, user)
                 print("User connected. ", user)
                 return redirect(settings.LOGIN_REDIRECT_URL)
@@ -46,34 +45,91 @@ class LoginPageView(View):
             context={ 'form': form, 'message': message,}
         )
     
-class SignUpView(View):
+def register(request):
     template_name = 'authentication/register.html'
     form_class = forms.SignupForm
 
-    # def email_check(self):
-    #     return self.request.user.email.endswith("@example.com")
-
-    def get(self, request):
-        form = self.form_class()
-        message = ''
-        return render(
-            request, 
-            self.template_name,
-            context={ 'form': form, 'message': message}
-        )
-    
-    def post(self, request):
-        form = self.form_class(request.POST)
+        
+    if request.method == 'POST':
+        form = form_class(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(settings.LOGIN_REDIRECT_URL)
-        message = 'Veuillez verifier si les deux mot de passe sont similaires ou revoyez les informations saisies.'
+            print(form)
+            # Enregistrer les donnees sans les envoyer dans la base de donnees
+            user = form.save(commit=False)
+            user.is_active = False   # Desactiver le code jusqu'a verification
+            user.save()
+
+            #  Envoyer le code de verification par email
+            send_verification_code(user)
+            messages.success(request, 'Un code de vérification a été envoyé à votre email.')
+
+            # rediriger vers le template de la verification de l'email universitaire
+            return redirect('verify-email', user_id=user.id)
+        # print(request.POST)
         return render(
             request,
-            self.template_name,
-            context={ 'form': form, 'message': message }
+            template_name,
+            context={ 'form': form }
         )
+    else:
+        form = form_class()
+    
+
+    return render(
+        request, 
+        template_name,
+        context={ 'form': form }
+    )
+    
+
+def verify_email(request, user_id): # class pour envoyer un code a l'utilisateur
+    template_name = 'authentication/verify_email.html'
+    form_class = forms.VerifyEmailForm
+    try:
+        user = models.User.objects.get(id=user_id)
+        verification = models.EmailVerification.objects.get(user=user)
+    except (models.User.DoesNotExist, models.EmailVerification.DoesNotExist):
+        messages.error(request, 'Utilisateur ou code de verification introuvable.')
+        return redirect('register')
+
+    if request.method == 'POST':
+        form = form_class(request.POST)
+        if form.is_valid:
+            code = form.data.get('code')
+            print(code)
+            if verification.is_expired():
+                messages.error(request, 'Le code a expiré. Un nouveau code a été envoyé.')
+                send_verification_code(user)
+                return redirect('verify_email', user_id=user.id)
+            
+            if verification.code == code:
+                verification.is_expired = True
+                verification.is_verified = True
+                verification.save()
+
+                # Activer l'utilisateur
+                user.is_active = True
+                user.save()
+
+                login(request, user)
+                return redirect(settings.LOGIN_REDIRECT_URL)
+
+            print("donnees de la requete POST: ", request.POST)
+            # print("code envoye : ", code_sent)
+            # user = form.save()
+            # print(code_sent)
+        
+    else:
+        form = form_class()
+    
+    return render(
+        request,
+        template_name,
+        context={ 'form': form }
+    )
+
+
+        
     
 
 def logout_user(request):
@@ -85,12 +141,15 @@ def logout_user(request):
 def password_change(request):
     if request.method == 'POST':
         # recuperer les donnees mis a jour
-        form = forms.PasswordChangeForm(user=request.user, data=request.POST or None)
+        form = forms.PasswordChangeForm(request.user, request.POST or None)
         # si c'est valide, on enregistre
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
+            messages.success(request, 'Mot de passe mis à jour avec succès !')
             return redirect('/')
+        else:
+            messages.error(request, 'Veuillez revoir les données entrées svp.')
     else:
         # Sinon pas de changement
         form = forms.PasswordChangeForm(user=request.user)
@@ -101,17 +160,24 @@ def password_change(request):
     )
 
 
-# def reset_password(request):
-#     template_name = 'authentication/reset_password.html'
-#     return render(request, template_name)
 
+def send_mail_page(request):
+    context = {}
 
-class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
-    template_name = 'authentication/password_reset.html'
-    email_template_name = 'authentication/password_reset_email.html'
-    # subject_template_name = 'authentication/password_reset_subject'
-    success_message = "We've emailed you instructions for setting your password, " \
-                      "if an account exists with the email you entered. You should receive them shortly." \
-                      " If you don't receive an email, " \
-                      "please make sure you've entered the address you registered with, and check your spam folder."
-    success_url = reverse_lazy('home')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        if email:
+            try:
+                send_mail(settings.EMAIL_HOST_USER, [email])
+                context['result'] = 'Email sent successfully'
+            except Exception as e:
+                context['result'] = f'Error sending email: {e}'
+        else:
+            context['result'] = 'All fields are required'
+    
+    return render(
+        request, 
+        "authentication/password_reset.html", 
+        context
+    )

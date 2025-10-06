@@ -41,7 +41,11 @@
                                     <i class="fa-regular fa-eye text-blue-600"></i>
                                     <span>Lire</span>
                                 </a>
-                                <a href="{% url 'read_exam' examen.id %}" class="bg-transparent border border-gray-300 text-black text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-100 active:bg-gray-200 transition-all duration-200 ease-in-out">
+                                <a
+                                    download
+                                    href="{% static examen.file.url %}" 
+                                    class="bg-transparent border border-gray-300 text-black text-sm p-2 min-[550px]:w-1/2 text-center font-semibold rounded-lg shadow hover:bg-gray-100 active:bg-gray-200 transition-all duration-200 ease-in-out"
+                                >
                                     <i class="fa-solid fa-download"></i>
                                     <span>Télécharger</span>
                                 </a>

@@ -18,9 +18,19 @@ urlpatterns = [
     ), # view base sur une class 
     path(      
         'inscription/', 
-        authentication.views.SignUpView.as_view(template_name='authentication/register.html'), 
+        authentication.views.register, 
         name='register'
     ),  # view base sur une class 
+    path(
+        'verifer-email/<int:user_id>',
+        authentication.views.verify_email,
+        name='verify-email',
+    ),
+    # path(
+    #     'verifier-email/resend-code/', 
+    #     authentication.views.resend_verification_code, 
+    #     name='resend_verification_code'
+    # ),
     path('logout/', authentication.views.logout_user, name='logout'),
     path('password-change/', authentication.views.password_change, name='password-change'), # vue base sur une fonction
 
@@ -34,7 +44,7 @@ urlpatterns = [
         name="password_reset"
     ),
     path(
-        'password-reset/done', 
+        'password-reset/sent', 
         auth_views.PasswordResetDoneView.as_view(template_name='authentication/password_reset_done.html'), 
         name="password_reset_done"
     ),
@@ -48,7 +58,6 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name='authentication/password_reset_complete.html'), 
         name="password_reset_complete"
     ),
-
 
     # App examens
     path('examens/<int:examen_id>/', examens.views.read_exam, name='read_exam'),

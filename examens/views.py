@@ -120,7 +120,6 @@ def read_exam(request, examen_id):
     return render(request, 'examens/read_examen.html', context=context)
 
 
-
 @login_required  # pour partager un examen il faut se connecter 
 def post_exam(request):
     if request.method == 'POST':
@@ -145,6 +144,7 @@ def post_exam(request):
         'examens/post_exam.html',
         context={ 'form': form }
     )
+
 
 def regle(request):
     return render(request, 'examens/regles.html')
