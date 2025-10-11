@@ -1,0 +1,37 @@
+<div class="flex flex-row gap-2 items-center pt-6 justify-end">
+    {% if page_obj.has_previous %}
+        <a 
+            href="?page=1"
+            class="bg-gray-500 text-white py-1.5 font-medium px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out"
+        >
+            {% comment %} <i class="fa-solid fa-chevron-left"></i> {% endcomment %}
+            « première
+        </a>
+        <a 
+            href="?page={{ page_obj.previous_page_number }}"
+            class="bg-gray-500 text-white py-1.5 font-medium px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out"
+        >
+            <i class="fa-solid fa-chevron-left"></i>
+            {% comment %} précédente {% endcomment %}
+        </a>
+    {% endif %}
+    <p class="text-gray-600 font-medium">
+        {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+    </p>
+    {% if page_obj.has_next %}
+        <a 
+            href="?page={{ page_obj.next_page_number }}"
+            class="bg-gray-500 text-white py-1.5 font-medium px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out"
+        >
+            <i class="fa-solid fa-chevron-right"></i>
+            {% comment %} suivant {% endcomment %}
+        </a>
+        <a 
+            href="?page={{ page_obj.paginator.num_pages }}"
+            class="bg-gray-500 text-white py-1.5 font-medium px-4 rounded-lg shadow hover:bg-gray-600 active:bg-gray-600 transition-all duration-300 ease-in-out"
+        >
+            {% comment %} <i class="fa-solid fa-chevron-right"></i> {% endcomment %}
+            dernière
+        </a>
+    {% endif %}
+</div>

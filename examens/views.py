@@ -1,10 +1,11 @@
+import os
 from django.shortcuts import render, redirect
 from examens.models import Exam
 from django.db.models import Q
 from examens.forms import ExamForm, SearchExamForm
 from django.contrib.auth.decorators import login_required
-import os
 from django.conf import settings
+from django.core.paginator import Paginator
 from pdf2image import convert_from_path
 from unidecode import unidecode
 
@@ -60,11 +61,18 @@ def home(request):
         # rechercher en tapant le titre de l'examen
         if title_exam_filter:
             examens = Exam.objects.filter(title=title_exam_filter)
-
+        
+        # On recupere les résultats pour une page individuelle et on specifie les nombres d'instances à affiche "3"
+        paginator = Paginator(examens, 6)
+        # Recuperer le numero de page dans l'url
+        page_number = request.GET.get('page')
+        # Recuperer l'objet (liste ou QuerySet) représentant la page sur laquelle nous sommes
+        page_obj = paginator.get_page(page_number)
 
     context = {
         'form': form,
-        'examens': examens,
+        # 'examens': examens,
+        'page_obj': page_obj,
     }
 
 

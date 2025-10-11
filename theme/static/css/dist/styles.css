@@ -13,7 +13,6 @@
     --color-yellow-300: #FCD34D;
     --color-green-400: #34D399;
     --color-blue-100: #DBEAFE;
-    --color-blue-200: #BFDBFE;
     --color-blue-300: #93C5FD;
     --color-blue-400: #60A5FA;
     --color-blue-500: #3B82F6;
@@ -1172,14 +1171,14 @@
   .items-center {
     align-items: center;
   }
-  .justify-around {
-    justify-content: space-around;
-  }
   .justify-between {
     justify-content: space-between;
   }
   .justify-center {
     justify-content: center;
+  }
+  .justify-end {
+    justify-content: flex-end;
   }
   .justify-stretch {
     justify-content: stretch;
@@ -1257,9 +1256,6 @@
   }
   .border-gray-400 {
     border-color: var(--color-gray-400);
-  }
-  .border-gray-600 {
-    border-color: var(--color-gray-600);
   }
   .border-gray-700 {
     border-color: var(--color-gray-700);
@@ -1386,9 +1382,6 @@
   .px-12 {
     padding-inline: calc(var(--spacing) * 12);
   }
-  .py-1 {
-    padding-block: calc(var(--spacing) * 1);
-  }
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
   }
@@ -1424,6 +1417,9 @@
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
+  }
+  .pt-4 {
+    padding-top: calc(var(--spacing) * 4);
   }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
@@ -1520,9 +1516,6 @@
   .text-black {
     color: var(--color-black);
   }
-  .text-blue-200 {
-    color: var(--color-blue-200);
-  }
   .text-blue-400 {
     color: var(--color-blue-400);
   }
@@ -1580,9 +1573,6 @@
   .text-white {
     color: var(--color-white);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .opacity-30 {
     opacity: 30%;
   }
@@ -1628,17 +1618,8 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
-  .btn-secondary {
-    --btn-color: var(--color-secondary);
-    --btn-fg: var(--color-secondary-content);
-  }
   .placeholder\:text-gray-300::placeholder {
     color: var(--color-gray-300);
-  }
-  @media (hover: hover) {
-    .hover\:border-gray-700:hover {
-      border-color: var(--color-gray-700);
-    }
   }
   @media (hover: hover) {
     .hover\:bg-blue-400:hover {
