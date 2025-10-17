@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=200)),
                 ('ufr', models.CharField(choices=[('SET', 'Set'), ('SES', 'Ses'), ('SANTE', 'Santé')], max_length=50)),
                 ('branch', models.CharField(choices=[('LI', 'Licence Informatique'), ('LMI', 'Licence Mathematiques Informatique'), ('LPC', 'Licence Physique Chimie'), ('LSEE', "Licence en Sciences de l'Eau et de l'Environnement"), ('MIO', 'Management et Informatisé des Organisations'), ('MTH', "Management du tourisme et de l'hôtellerie"), ('LEA', 'Langues Étrangères Appliquées'), ('LAC', 'Lettres, Arts et Civilsations'), ('SEG', 'Sciences Économiques et Gestion'), ('MDS', 'Médecine et Santé'), ('DENT', 'Dentisterie'), ('PHARM', 'Pharmacie')], max_length=500)),
-                ('year', models.DateField(blank=True, null=True)),
+                ('year', models.IntegerField(blank=True, null=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

@@ -26,18 +26,24 @@ class LoginPageView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username'],
-            password = form.cleaned_data['password'],
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             # email=form.cleaned_data['email'],
-            data_user = models.User.objects.get(username=username)
+            try:
+                data_user = models.User.objects.get(username=username)
+            except models.User.DoesNotExist:
+                messages.error(request, 'Cet utilisateur n\'existe pas.')
 
-            user = authenticate(request, username, password)
+            user = authenticate(request, username=username, password=password)
             # Vérifier si les donnees de l'utilisateur sont remplies
             # Et si le compte est activé (email universitaire verifié)
             if user is not None and data_user.is_active:
                 login(request, user)
-                print("User connected. ", user)
+                messages.success(request, 'Utilisateur connecté avec succès !')
+                print("User connected.", user)
                 return redirect(settings.LOGIN_REDIRECT_URL)
+            else:
+                messages.error(request, 'Identifiants incorrects.')
         message = 'Identifiants incorrects. Veuillez vérifier votre nom d\'utilisateur et mot de passe.'
         return render(
             request,
