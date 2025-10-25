@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from . import forms, models
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
@@ -89,8 +90,10 @@ def register(request):
     
 
 def verify_email(request, user_id): # class pour envoyer un code a l'utilisateur
+    verification = models.EmailVerification()
     template_name = 'authentication/verify_email.html'
     form_class = forms.VerifyEmailForm
+    message_error = ''
     try:
         user = models.User.objects.get(id=user_id)
         verification = models.EmailVerification.objects.get(user=user)
@@ -101,14 +104,14 @@ def verify_email(request, user_id): # class pour envoyer un code a l'utilisateur
     if request.method == 'POST':
         form = form_class(request.POST)
         if form.is_valid:
-            code = form.data.get('code')
+            code = form.data.get('code').lower()
             print(code)
             if verification.is_expired():
                 messages.error(request, 'Le code a expiré. Un nouveau code a été envoyé.')
                 send_verification_code(user)
                 return redirect('verify_email', user_id=user.id)
             
-            if verification.code == code:
+            if verification.code.lower() == code:
                 verification.is_expired = True
                 verification.is_verified = True
                 verification.save()
@@ -119,19 +122,19 @@ def verify_email(request, user_id): # class pour envoyer un code a l'utilisateur
 
                 login(request, user)
                 return redirect(settings.LOGIN_REDIRECT_URL)
+            else:
+                message_error = "Le code que vous avez entré est incorrect."
+                messages.error(request, 'Le code que vous avez entré est incorrect.')
 
             print("donnees de la requete POST: ", request.POST)
-            # print("code envoye : ", code_sent)
-            # user = form.save()
-            # print(code_sent)
-        
+    
     else:
         form = form_class()
     
     return render(
         request,
         template_name,
-        context={ 'form': form }
+        context={ 'form': form, 'message_error': message_error }
     )
 
 
@@ -147,7 +150,7 @@ def logout_user(request):
 def password_change(request):
     if request.method == 'POST':
         # recuperer les donnees mis a jour
-        form = forms.PasswordChangeForm(request.user, request.POST or None)
+        form = forms.PasswordChangeForm(user=request.user, data=request.POST or None)
         # si c'est valide, on enregistre
         if form.is_valid():
             form.save()
@@ -158,7 +161,7 @@ def password_change(request):
             messages.error(request, 'Veuillez revoir les données entrées svp.')
     else:
         # Sinon pas de changement
-        form = forms.PasswordChangeForm(user=request.user)
+        form = forms.PasswordChangeForm()
     return render(
         request, 
         'authentication/password_change.html', 

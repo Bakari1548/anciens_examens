@@ -11,7 +11,7 @@
             <div class="flex flex-col gap-12 p-4">
                 <div class="flex flex-col gap-4">
                     <h2 class="text-2xl font-bold text-center py-6">Entrer le code envoyé</h2>
-                    <p>Un code à 6 caractères a été envoyé à <span class="text-blue-400">{{ user.email }}</span></p>
+                    <p class="text-gray-700">Un code à 6 caractères a été envoyé à <span class="text-blue-400">{{ user.email }}</span></p>
                 </div>
                 <form method="post" class="md:w-[400px] flex flex-col gap-4">
                     {% csrf_token %}
@@ -19,6 +19,7 @@
                         <label class="font-medium text-gray-700">Entrer le code :</label>
                         {{ form.code|add_class:"rounded-lg text-xl border-gray-300 font-semibold" }}
                      </div>
+                    <p class="text-gray-700">{{ message_error }}</p>
                     <button type="submit" class="bg-gray-600 font-semibold text-white mx-auto py-3 px-8 rounded-lg shadow hover:bg-gray-700 transition-all duration-300 ease-in-out">
                         Valider
                     </button>
