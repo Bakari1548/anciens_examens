@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,7 +16,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['209.38.243.44']
 
 
 # Application definition
@@ -127,7 +128,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'theme/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+# STATIC_URL = '/theme/static/'
+# STATIC_ROOT = f'{BASE_DIR}/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'theme/static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -155,4 +163,4 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # Media 
 MEDIA_URL = '/medias/'
-MEDIA_ROOT = BASE_DIR.joinpath('theme/static/medias/')
+MEDIA_ROOT = BASE_DIR.joinpath('/medias/')
