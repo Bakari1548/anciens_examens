@@ -60,7 +60,7 @@ def home(request):
         
         # rechercher en tapant le titre de l'examen
         if title_exam_filter:
-            examens = Exam.objects.filter(title=title_exam_filter)
+            examens = Exam.objects.filter(title=title_exam_filter).order_by('-date_upload')
         
         # On recupere les résultats pour une page individuelle et on specifie les nombres d'instances à affiche "3"
         paginator = Paginator(examens, 6)
@@ -155,4 +155,5 @@ def post_exam(request):
 
 
 def regle(request):
+
     return render(request, 'examens/regles.html')
