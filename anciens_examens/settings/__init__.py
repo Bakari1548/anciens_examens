@@ -1,26 +1,21 @@
 from pathlib import Path
 import environ
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(
-    DEBUG=(bool, True)
-)
 
-SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG')
+SECRET_KEY = 'django-insecure-ywy(5r#u=_@tyy=oa0+4xv_zvz2$pdweyss((q2j$tx(t(%#9+'
+
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'anciensexamensuidt.app',
     'www.anciensexamensuidt.app',
-    '127.0.0.1:8000',
-    '209.38.243.44'
+    '209.38.243.44',
+    '127.0.0.1'
 ]
 
 
@@ -86,11 +81,11 @@ WSGI_APPLICATION = 'anciens_examens.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
+        'NAME': 'anciens_examens_db',
+        'USER': 'etudiant',
         'PASSWORD': '',
         'HOST': '',
-        'PORT': env('DB_PORT'),
+        'PORT': 5432,
     }
 }
 
@@ -158,11 +153,11 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'senservice.client@gmail.com'
+EMAIL_HOST_PASSWORD = 'yslq gkti nbgl zgdq '
 
 
 # Media 
