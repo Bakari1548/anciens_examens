@@ -11,7 +11,7 @@ from unidecode import unidecode
 
 
 def home(request):
-    examens = Exam.objects.all()
+    examens = Exam.objects.all().order_by('-date_upload')
 
     # Crée une instance du formulaire, pré-remplie avec les données GET
     form = SearchExamForm(request.GET)
@@ -25,38 +25,38 @@ def home(request):
         # Gestion du filtrage des examens
         if year_filter or matiere_filter or filiere_filter:
             if matiere_filter:
-                examens = Exam.objects.filter(matiere=matiere_filter)
+                examens = Exam.objects.filter(matiere=matiere_filter).order_by('-date_upload')
             
             if filiere_filter:
-                examens = Exam.objects.filter(filiere=filiere_filter)
+                examens = Exam.objects.filter(filiere=filiere_filter).order_by('-date_upload')
             
             if year_filter:
-                examens = Exam.objects.filter(year=year_filter)
+                examens = Exam.objects.filter(year=year_filter).order_by('-date_upload')
 
             if year_filter and matiere_filter:
                 examens = Exam.objects.filter(
                     Q(year=year_filter) &
                     Q(matiere=matiere_filter)
-                )
+                ).order_by('-date_upload')
             
             if matiere_filter and filiere_filter:
                 examens = Exam.objects.filter(
                     Q(matiere=matiere_filter) &
                     Q(filiere=filiere_filter)
-                )
+                ).order_by('-date_upload')
             
             if year_filter and filiere_filter:
                 examens = Exam.objects.filter(
                     Q(year=year_filter) &
                     Q(filiere=filiere_filter)
-                ) 
+                ).order_by('-date_upload')
                 
             if year_filter and filiere_filter and matiere_filter:
                 examens = Exam.objects.filter(
                     Q(year=year_filter) &
                     Q(filiere=filiere_filter) &
                     Q(matiere=matiere_filter)
-                ) 
+                ).order_by('-date_upload')
         
         # rechercher en tapant le titre de l'examen
         if title_exam_filter:
@@ -153,4 +153,6 @@ def post_exam(request):
 
 
 def regle(request):
+
     return render(request, 'examens/regles.html')
+
