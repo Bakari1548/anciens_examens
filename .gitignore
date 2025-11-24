@@ -3,3 +3,5 @@ env
 venv
 __pycache__
 db.sqlite3
+anciens_examens/settings/production.py
+anciens_examens/staticfiles/
