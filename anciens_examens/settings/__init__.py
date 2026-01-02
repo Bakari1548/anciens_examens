@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = 'django-insecure-ywy(5r#u=_@tyy=oa0+4xv_zvz2$pdweyss((q2j$tx(t(%#9+'
+# SECRET_KEY = '}5oAR;jn<G_jhu]#?p{YYd,\t'
 
 DEBUG = True
 
@@ -83,8 +84,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'anciens_examens_db',
         'USER': 'etudiant',
-        'PASSWORD': '',
-        'HOST': '',
+        'PASSWORD': 'dix+quatre=14',
+        'HOST': '127.0.0.1',
         'PORT': 5432,
     }
 }
@@ -127,7 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 # STATIC_URL = '/theme/static/'
 # STATIC_ROOT = f'{BASE_DIR}/static/'
@@ -161,5 +162,5 @@ EMAIL_HOST_PASSWORD = 'yslq gkti nbgl zgdq '
 
 
 # Media 
-MEDIA_URL = '/medias/'
-MEDIA_ROOT = BASE_DIR.joinpath('/medias/')
+# MEDIA_URL = '/medias/'
+# MEDIA_ROOT = BASE_DIR.joinpath('/medias/')
