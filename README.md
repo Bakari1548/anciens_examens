@@ -25,5 +25,5 @@ Utilisation du système d'authentification que nous offre django.
 + Django
 + Tailwind-django
 + Flowbite
-+ SQLlite
++ PostgreSQL
 + Git & GitHub
